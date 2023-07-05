@@ -45,7 +45,6 @@ public class HomeControllerTest {
 				"<form action=\"/search\"",
 				"<form action=\"/new-video\"");
 		// @formatter:on
-
 	}
 
 	@Test
@@ -63,7 +62,23 @@ public class HomeControllerTest {
 				new NewVideo("new video", "new desc"), 
 				"user");
 		// @formatter:on
+	}
 
+	@Test
+	@WithMockUser
+	void postSearchVideoShouldWork() throws Exception {
+		// @formatter:off
+		String html = mvc.perform(
+					post("/search")
+					.param("value", "video")
+					.with(csrf()))
+			.andExpect(status().isOk())
+			.andReturn()
+			.getResponse()
+			.getContentAsString();
+		// @formatter:on
+		// TODO: asserts here
+		System.out.println("HTML = " + html);
 	}
 
 }
